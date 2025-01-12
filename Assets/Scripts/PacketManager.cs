@@ -6,6 +6,8 @@ public class PacketManager : MonoBehaviour
 {
     [SerializeField]AttackObjectHandler attackObjectHandler;
     [SerializeField] PacketScript testPrefab;
+
+    [SerializeField]List<PacketScript> testScripts;
     // Start is called before the first frame update
     void Start()
     {

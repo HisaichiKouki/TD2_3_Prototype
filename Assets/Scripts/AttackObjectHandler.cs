@@ -238,9 +238,14 @@ public class AttackObjectHandler : MonoBehaviour
         attackObjects.Add(new AttackObject {Type = type, Zipped = zipped});
     }
 
-    public void ReturnAttackObject(int index)
+    public bool ReturnAttackObject(int index)
+    {
+        return ZipAttackObject(ref attackObjects, index);
+        
+    }
+
+    public void DestroyIndex(int index)
     {
         attackObjects.RemoveAt(index);
-        ZipAttackObject(ref attackObjects, index);
     }
 }
