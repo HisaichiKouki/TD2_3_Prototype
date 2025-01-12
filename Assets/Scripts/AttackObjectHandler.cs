@@ -232,4 +232,15 @@ public class AttackObjectHandler : MonoBehaviour
             Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
         }
     }
+
+    public void AddAttackObject(uint type,uint zipped)
+    {
+        attackObjects.Add(new AttackObject {Type = type, Zipped = zipped});
+    }
+
+    public void ReturnAttackObject(int index)
+    {
+        attackObjects.RemoveAt(index);
+        ZipAttackObject(ref attackObjects, index);
+    }
 }
