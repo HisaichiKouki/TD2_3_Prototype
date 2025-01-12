@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AttackObjectHandler : MonoBehaviour
@@ -78,23 +79,27 @@ public class AttackObjectHandler : MonoBehaviour
     public void Zipping(List<CompressObject> compressed, int index)
     {
         var left = compressed[index - 1];
-        left.ZippedSum -= left.ElementZipped[^1];
-        left.ElementZipped.RemoveAt(left.ElementZipped.Count - 1);
+        //left.ZippedSum -= left.ElementZipped[^1];
+        //left.ElementZipped.RemoveAt(left.ElementZipped.Count - 1);
+
 
         var target = compressed[index];
         left.ZippedSum += target.ZippedSum + target.NumObject;
-        left.ElementZipped.Add(target.ZippedSum + target.NumObject);
+        //left.ElementZipped.Add(target.ZippedSum + target.NumObject);
+        left.ElementZipped[left.ElementZipped.Count-1] += target.ZippedSum + target.NumObject;
 
         var right = compressed[index + 1];
-        right.NumObject--;
+        //right.NumObject--;
         right.ZippedSum -= right.ElementZipped[0];
+        
+        left.ElementZipped[left.ElementZipped.Count - 1] += right.ElementZipped[0];
         right.ElementZipped.RemoveAt(0);
 
         left.NumObject += right.NumObject;
         left.ZippedSum += right.ZippedSum;
         left.ElementZipped.AddRange(right.ElementZipped);
 
-        compressed.RemoveAt(index);
+        compressed.RemoveRange(index,2);
     }
 
     public List<AttackObject> Uncompress(List<CompressObject> compressed)
@@ -167,10 +172,25 @@ public class AttackObjectHandler : MonoBehaviour
             new AttackObject { Type = 2, Zipped = 0 },
             new AttackObject { Type = 3, Zipped = 2 },
             new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+        };
+    }
+    [ContextMenu("SetType3")]
+    public void TestSetType3()
+    {
+        attackObjects = new List<AttackObject>
+        {
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 3, Zipped = 2 },
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 0, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 0, Zipped = 0 },
         };
     }
     [SerializeField] int testIndex;
-    [ContextMenu("Test Compression")]
+    [ContextMenu("Test Compression while")]
     public void TestCompression()
     {
         int index = testIndex; // サンプル
@@ -183,7 +203,28 @@ public class AttackObjectHandler : MonoBehaviour
         }
 
         attackObjects.RemoveAt(index);
-        while (ZipAttackObject(ref attackObjects, index)) { }
+        while (ZipAttackObject(ref attackObjects, index)) { };//継続するかしないかのflagが帰ってる
+
+        Debug.Log("After Compression:");
+        foreach (var obj in attackObjects)
+        {
+            Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
+        }
+    }
+    [ContextMenu("Test Compression2")]
+    public void TestCompression2()
+    {
+        int index = testIndex; // サンプル
+
+
+        Debug.Log("Before Compression:");
+        foreach (var obj in attackObjects)
+        {
+            Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
+        }
+
+        //attackObjects.RemoveAt(index);
+        ZipAttackObject(ref attackObjects, index);//継続するかしないかのflagが帰ってる
 
         Debug.Log("After Compression:");
         foreach (var obj in attackObjects)

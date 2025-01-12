@@ -1238,14 +1238,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackObjects:
-  - Type: 2
-    Zipped: 0
+  - Type: 1
+    Zipped: 3
   - Type: 1
     Zipped: 0
-  - Type: 3
-    Zipped: 0
-  - Type: 2
-    Zipped: 0
+  testIndex: 2
 --- !u!4 &2100539432
 Transform:
   m_ObjectHideFlags: 0
