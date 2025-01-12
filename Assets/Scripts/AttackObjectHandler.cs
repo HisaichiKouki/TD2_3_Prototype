@@ -143,48 +143,38 @@ public class AttackObjectHandler : MonoBehaviour
     }
 
     // Unity Editorでのデバッグ実行用
+    // Unity Editorでのデバッグ実行用
+    [ContextMenu("SetType")]
+    public void TestSetType()
+    {
+        attackObjects = new List<AttackObject>
+        {
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 3, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 1, Zipped = 0 },
+        };
+    }
+    [ContextMenu("SetType2")]
+    public void TestSetType2()
+    {
+        attackObjects = new List<AttackObject>
+        {
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 3, Zipped = 2 },
+            new AttackObject { Type = 1, Zipped = 0 },
+        };
+    }
+    [SerializeField] int testIndex;
     [ContextMenu("Test Compression")]
     public void TestCompression()
     {
-        int index = 1; // サンプル
-        attackObjects = new List<AttackObject>
-        {
-            new AttackObject { Type = 1, Zipped = 0 },
-            new AttackObject { Type = 1, Zipped = 0 },
-            new AttackObject { Type = 2, Zipped = 0 },
-            new AttackObject { Type = 2, Zipped = 0 },
-            new AttackObject { Type = 1, Zipped = 0 },
-        };
-
-        Debug.Log("Before Compression:");
-        foreach (var obj in attackObjects)
-        {
-            Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
-        }
-
-        while (ZipAttackObject(ref attackObjects, index)) { }
-
-        Debug.Log("After Compression:");
-        foreach (var obj in attackObjects)
-        {
-            Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
-        }
-    }
-    // Unity Editorでのデバッグ実行用
-
-    [SerializeField] int testIndex;
-    [ContextMenu("2Test Compression")]
-    public void TestCompression2()
-    {
-        int index = 1; // サンプル
-        attackObjects = new List<AttackObject>
-        {
-            new AttackObject { Type = 1, Zipped = 0 },
-            new AttackObject { Type = 1, Zipped = 0 },
-            new AttackObject { Type = 2, Zipped = 0 },
-            new AttackObject { Type = 2, Zipped = 0 },
-            new AttackObject { Type = 1, Zipped = 0 },
-        };
+        int index = testIndex; // サンプル
+        
 
         Debug.Log("Before Compression:");
         foreach (var obj in attackObjects)
