@@ -149,10 +149,11 @@ public class AttackObjectHandler : MonoBehaviour
         int index = 1; // サンプル
         attackObjects = new List<AttackObject>
         {
-            new AttackObject { Type = 1, Zipped = 10 },
-            new AttackObject { Type = 1, Zipped = 20 },
-            new AttackObject { Type = 2, Zipped = 30 },
-            new AttackObject { Type = 2, Zipped = 40 },
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 1, Zipped = 0 },
         };
 
         Debug.Log("Before Compression:");
@@ -161,6 +162,37 @@ public class AttackObjectHandler : MonoBehaviour
             Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
         }
 
+        while (ZipAttackObject(ref attackObjects, index)) { }
+
+        Debug.Log("After Compression:");
+        foreach (var obj in attackObjects)
+        {
+            Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
+        }
+    }
+    // Unity Editorでのデバッグ実行用
+
+    [SerializeField] int testIndex;
+    [ContextMenu("2Test Compression")]
+    public void TestCompression2()
+    {
+        int index = 1; // サンプル
+        attackObjects = new List<AttackObject>
+        {
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 1, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 2, Zipped = 0 },
+            new AttackObject { Type = 1, Zipped = 0 },
+        };
+
+        Debug.Log("Before Compression:");
+        foreach (var obj in attackObjects)
+        {
+            Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
+        }
+
+        attackObjects.RemoveAt(index);
         while (ZipAttackObject(ref attackObjects, index)) { }
 
         Debug.Log("After Compression:");
