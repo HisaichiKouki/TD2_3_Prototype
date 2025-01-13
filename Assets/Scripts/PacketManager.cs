@@ -99,11 +99,7 @@ public class PacketManager : MonoBehaviour
 
                 //StartCoroutine(Marge(i));
                 isMarge = attackObjectHandler.ReturnAttackObject(i);
-
-
-
             }
-
         }
     }
     private IEnumerator Marge(int index)
