@@ -19,16 +19,20 @@ public class PacketScript : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     GameObject gaugeObj;
-    float gaugeRatio;
+    public float gaugeRatio;
+    float totalTime;
 
     public uint GetTypes() { return type; }
     public uint GetZipped() { return zipped; }
+
+    public float GetGaugeRatio() { return gaugeRatio; } 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         initColor = spriteRenderer.color;
-        curChargeTime = totalChargeTime * (1 + zipped / 2);
+        curChargeTime = 0;
+        totalTime= totalChargeTime * (1 + zipped / 2);//í≤êÆÇµÇΩtotalTImeÇë„ì¸
 
         gaugeObj = transform.GetChild(0).gameObject;
         gaugeObj.transform.localScale = new Vector3(0, 1, 1);
@@ -38,7 +42,7 @@ public class PacketScript : MonoBehaviour
     void Update()
     {
         Charge();
-        gaugeRatio = (totalChargeTime - curChargeTime) / totalChargeTime;
+        gaugeRatio = curChargeTime / totalTime;
         gaugeObj.transform.localScale = new Vector3(Mathf.Clamp01(gaugeRatio), 1, 1);
 
     }
@@ -48,7 +52,7 @@ public class PacketScript : MonoBehaviour
         if (!touch) { return; } //ÉzÅ[ÉãÉhíÜ
         if (Input.GetMouseButton(0))
         {
-            curChargeTime -= Time.deltaTime;
+            curChargeTime += Time.deltaTime;
         }
     }
 

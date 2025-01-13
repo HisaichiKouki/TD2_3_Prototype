@@ -1213,6 +1213,8 @@ MonoBehaviour:
   attackObjectHandler: {fileID: 2100539431}
   packetPrefab:
   - {fileID: -7114034884143433079, guid: 7c3400932f1b53045a9e0635f7ad3d1f, type: 3}
+  - {fileID: -7114034884143433079, guid: 902dbc7634eed9b4a945d755405e9921, type: 3}
+  - {fileID: -7114034884143433079, guid: 32a4d1047b7ba834ea1c3c41c8ba559e, type: 3}
   packets: []
 --- !u!1 &1545992040
 GameObject:
