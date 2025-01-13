@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ public class PacketManager : MonoBehaviour
 
     [SerializeField] bool isRandom;
     [SerializeField] List<int> packetTypes;
+    [SerializeField] bool isMarge;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +50,7 @@ public class PacketManager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSecondsRealtime(0.5f);
-            PacketSpawn(Random.Range(0, packetPrefab.Length - 1));
+            PacketSpawn(UnityEngine.Random.Range(0, packetPrefab.Length - 1));
 
         }
 
@@ -72,13 +74,18 @@ public class PacketManager : MonoBehaviour
             {
                 //’·‰Ÿ‚µ‚ÅUŒ‚‚·‚éŽž‚Íæ‚ÉƒŠƒXƒg‚©‚çÁ‚·
                 attackObjectHandler.DestroyIndex(i);
-                attackObjectHandler.ReturnAttackObject(i);
 
+                //StartCoroutine(Marge(i));
+                isMarge=attackObjectHandler.ReturnAttackObject(i);
 
                 Destroy(packets[i].gameObject);
                 packets.RemoveAt(i);
             }
 
         }
+    }
+    private IEnumerator Marge(int index)
+    {
+        while(attackObjectHandler.ReturnAttackObject(index)) { yield return new WaitForSecondsRealtime(0.5f); }
     }
 }
