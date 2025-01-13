@@ -7,6 +7,8 @@ public class AttackObjectHandler : MonoBehaviour
 {
     PacketManager packetManager;
     Vector3 destroyPos;//消した箇所の座標を保持して圧縮後に使う
+    int margeIndex;//最後にマージした所のindex
+    public int GetMargeIndex() { return margeIndex; }
     [Serializable]
     public struct AttackObject
     {
@@ -107,6 +109,7 @@ public class AttackObjectHandler : MonoBehaviour
         left.ElementZipped.AddRange(right.ElementZipped);
 
         compressed.RemoveRange(index,2);
+        margeIndex = index;
 
         //ゲームオブジェクトをDestroy
         for (int i = 0; i < index + 2; i++)

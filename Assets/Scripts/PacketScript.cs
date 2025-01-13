@@ -23,11 +23,13 @@ public class PacketScript : MonoBehaviour
     public float gaugeRatio;
     float totalTime;
 
+    PacketManager packetManager;
+
     public uint GetTypes() { return type; }
     public uint GetZipped() { return zipped; }
     public void SetZipped(uint value) { 
         zipped = value; 
-        totalTime = totalChargeTime * (1 + zipped / 2);//調整したtotalTImeを代入
+        totalTime = totalChargeTime * (1 + zipped*1.5f);//調整したtotalTImeを代入
         powerText.SetText((int)zipped);
     }
 
@@ -35,6 +37,7 @@ public class PacketScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        packetManager=FindAnyObjectByType<PacketManager>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         initColor = spriteRenderer.color;
         curChargeTime = 0;
@@ -61,6 +64,7 @@ public class PacketScript : MonoBehaviour
     void Charge()
     {
         if (!touch) { return; } //ホールド中
+        if (packetManager.GetIsMarge()) { return; }//マージが残ってる時
         if (Input.GetMouseButton(0))
         {
             curChargeTime += Time.deltaTime;
@@ -74,6 +78,7 @@ public class PacketScript : MonoBehaviour
     {
         if (collision.tag == "MousePointer")
         {
+            if (packetManager.GetIsMarge()) { return; }
             touch = true;
 
             spriteRenderer.color = new UnityEngine.Color(initColor.r + 0.2f, initColor.g + 0.2f, initColor.b + 0.2f);

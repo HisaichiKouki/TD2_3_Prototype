@@ -315,7 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   zipped: 0
-  totalChargeTime: 1
+  totalChargeTime: 0.5
   powerText: {fileID: 1868719066417026333}
   gaugeRatio: 0
 --- !u!50 &5046553370737919104

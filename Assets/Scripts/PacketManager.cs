@@ -16,6 +16,8 @@ public class PacketManager : MonoBehaviour
     [SerializeField] List<int> packetTypes;
     [SerializeField] bool isMarge;
 
+    public bool GetIsMarge() { return isMarge; }    
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +87,15 @@ public class PacketManager : MonoBehaviour
         }
 
     }
+    private IEnumerator Marging()
+    {
+        while (isMarge)
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            isMarge = attackObjectHandler.ReturnAttackObject(attackObjectHandler.GetMargeIndex());
+        }
+    }
 
     void PacketAttack()
     {
@@ -97,15 +108,16 @@ public class PacketManager : MonoBehaviour
                 Destroy(packets[i].gameObject);
                 packets.RemoveAt(i);
 
-                //StartCoroutine(Marge(i));
+               // StartCoroutine(Marge(i));
                 isMarge = attackObjectHandler.ReturnAttackObject(i);
             }
         }
+        StartCoroutine(Marging());
     }
-    private IEnumerator Marge(int index)
-    {
-        while (attackObjectHandler.ReturnAttackObject(index)) { yield return new WaitForSecondsRealtime(0.5f); }
-    }
+    //private IEnumerator Marge(int index)
+    //{
+    //    while (attackObjectHandler.ReturnAttackObject(index)) { yield return new WaitForSecondsRealtime(0.5f); }
+    //}
 
     //リストのリセット
    public void AllReset()
