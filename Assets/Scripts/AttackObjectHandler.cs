@@ -54,7 +54,6 @@ public class AttackObjectHandler : MonoBehaviour
                 current.NumObject++;
                 current.ZippedSum += elem.Zipped;
                 current.ElementZipped.Add(elem.Zipped);
-                //packetManager.PacketInstantiate((int)current.Type, (int)current.ZippedSum, destroyPos);
             }
             else
             {
@@ -63,10 +62,7 @@ public class AttackObjectHandler : MonoBehaviour
                 current.ZippedSum = elem.Zipped;
                 current.ElementZipped.Add(elem.Zipped);
                 compressed.Add(current);
-                //多分ここに圧縮されたオブジェクトを生成するはず
-
-                //packetManager.PacketInstantiate((int)current.Type, (int)current.ZippedSum, destroyPos);
-
+               
             }
             reference.Add(compressed.Count - 1);
         }
@@ -140,7 +136,7 @@ public class AttackObjectHandler : MonoBehaviour
                 count++;
                 //高さをゴリ押しで調整
                 Vector3 newPos = new Vector3(-1.47935629f, -4.91727686f+(count*0.8f), -0.02f);
-                packetManager.MargeSpown((int)compObj.Type, (int)elem, newPos);
+                packetManager.MargeSpown((int)compObj.Type, elem, newPos);
 
             }
         }

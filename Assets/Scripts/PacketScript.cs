@@ -7,8 +7,9 @@ public class PacketScript : MonoBehaviour
 {
     [SerializeField] uint type;
     [SerializeField] uint zipped;
-    [SerializeField] float totalChargeTime=0.1f;
+    [SerializeField] float totalChargeTime = 0.1f;
     float curChargeTime;
+    [SerializeField] SetTextScript powerText;
 
     bool attack;
     bool touch;
@@ -24,23 +25,33 @@ public class PacketScript : MonoBehaviour
 
     public uint GetTypes() { return type; }
     public uint GetZipped() { return zipped; }
+    public void SetZipped(uint value) { 
+        zipped = value; 
+        totalTime = totalChargeTime * (1 + zipped / 2);//í≤êÆÇµÇΩtotalTImeÇë„ì¸
+        powerText.SetText((int)zipped);
+    }
 
-    public float GetGaugeRatio() { return gaugeRatio; } 
+    public float GetGaugeRatio() { return gaugeRatio; }
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         initColor = spriteRenderer.color;
         curChargeTime = 0;
-        totalTime= totalChargeTime * (1 + zipped / 2);//í≤êÆÇµÇΩtotalTImeÇë„ì¸
-
+         totalTime= totalChargeTime * (1 + zipped / 2);//í≤êÆÇµÇΩtotalTImeÇë„ì¸
+        
+        powerText.SetText((int)zipped);
         gaugeObj = transform.GetChild(0).gameObject;
         gaugeObj.transform.localScale = new Vector3(0, 1, 1);
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         Charge();
         gaugeRatio = curChargeTime / totalTime;
         gaugeObj.transform.localScale = new Vector3(Mathf.Clamp01(gaugeRatio), 1, 1);
@@ -56,7 +67,7 @@ public class PacketScript : MonoBehaviour
         }
     }
 
-    
+
 
 
     private void OnTriggerEnter2D(Collider2D collision)

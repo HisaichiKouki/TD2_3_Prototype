@@ -1214,11 +1214,11 @@ MonoBehaviour:
   attackObjectHandler: {fileID: 1519356696}
   packetPrefab:
   - {fileID: -7114034884143433079, guid: 7c3400932f1b53045a9e0635f7ad3d1f, type: 3}
-  - {fileID: -7114034884143433079, guid: 902dbc7634eed9b4a945d755405e9921, type: 3}
-  - {fileID: -7114034884143433079, guid: 32a4d1047b7ba834ea1c3c41c8ba559e, type: 3}
+  - {fileID: -7114034884143433079, guid: 9ee1c190d10addd45bcd10edd8d640c0, type: 3}
+  - {fileID: -7114034884143433079, guid: b4f6a3454fd131d439e3a1ce5ec9afa3, type: 3}
   packets: []
   isRandom: 0
-  packetTypes: 0000000001000000020000000000000001000000
+  packetTypes: 00000000010000000200000000000000010000000000000001000000
   isMarge: 0
 --- !u!114 &1519356696
 MonoBehaviour:

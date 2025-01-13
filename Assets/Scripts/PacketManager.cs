@@ -48,22 +48,23 @@ public class PacketManager : MonoBehaviour
 
     }
     //圧縮後nullになった箇所に圧縮オブジェクトを追加する
-    public void PacketInstantiate(int type, int zipped, Vector3 pos)
-    {
-        for (int i = 0; i < packets.Count; i++)
-        {
-            if (packets[i] == null)
-            {
+    //public void PacketInstantiate(int type, uint zipped, Vector3 pos)
+    //{
+    //    for (int i = 0; i < packets.Count; i++)
+    //    {
+    //        if (packets[i] == null)
+    //        {
 
-                packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
-            }
-        }
-        //Instantiate(packetPrefab[index], this.transform);
+    //            packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
+    //            packets[packets.Count - 1].SetZipped(zipped);
+    //        }
+    //    }
+    //    //Instantiate(packetPrefab[index], this.transform);
 
-        //attackObjectHandler.AddAttackObject(packets[packets.Count - 1]);
+    //    //attackObjectHandler.AddAttackObject(packets[packets.Count - 1]);
 
 
-    }
+    //}
     private IEnumerator SpawnRandom()
     {
         for (int i = 0; i < 3; i++)
@@ -122,8 +123,9 @@ public class PacketManager : MonoBehaviour
     }
 
     //マージ後に新しく生成する
-    public void MargeSpown(int type, int zipped, Vector3 pos)
+    public void MargeSpown(int type, uint zipped, Vector3 pos)
     {
         packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
+        packets[packets.Count - 1].SetZipped(zipped);
     }
 }
