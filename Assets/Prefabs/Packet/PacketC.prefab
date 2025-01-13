@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b6d856c3c60cf429df23b12f8a24b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  type: 2
   zipped: 0
   totalChargeTime: 1
   gaugeRatio: 0

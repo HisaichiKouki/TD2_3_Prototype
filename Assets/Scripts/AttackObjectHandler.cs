@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AttackObjectHandler : MonoBehaviour
 {
+    PacketManager packetManager;
+    Vector3 destroyPos;//消した箇所の座標を保持して圧縮後に使う
     [Serializable]
     public struct AttackObject
     {
@@ -31,6 +33,10 @@ public class AttackObjectHandler : MonoBehaviour
 
     public List<AttackObject> attackObjects;
 
+    private void Start()
+    {
+        packetManager = GetComponent<PacketManager>();
+    }
     public void CompressAttackObject(List<AttackObject> vec, out List<CompressObject> compressed, out List<int> reference)
     {
         compressed = new List<CompressObject>();
@@ -48,6 +54,7 @@ public class AttackObjectHandler : MonoBehaviour
                 current.NumObject++;
                 current.ZippedSum += elem.Zipped;
                 current.ElementZipped.Add(elem.Zipped);
+                //packetManager.PacketInstantiate((int)current.Type, (int)current.ZippedSum, destroyPos);
             }
             else
             {
@@ -56,6 +63,10 @@ public class AttackObjectHandler : MonoBehaviour
                 current.ZippedSum = elem.Zipped;
                 current.ElementZipped.Add(elem.Zipped);
                 compressed.Add(current);
+                //多分ここに圧縮されたオブジェクトを生成するはず
+
+                //packetManager.PacketInstantiate((int)current.Type, (int)current.ZippedSum, destroyPos);
+
             }
             reference.Add(compressed.Count - 1);
         }
@@ -100,16 +111,37 @@ public class AttackObjectHandler : MonoBehaviour
         left.ElementZipped.AddRange(right.ElementZipped);
 
         compressed.RemoveRange(index,2);
+
+        //ゲームオブジェクトをDestroy
+        for (int i = 0; i < index + 2; i++)
+        {
+            destroyPos= packetManager.packets[i].gameObject.transform.position;
+            Destroy(packetManager.packets[i].gameObject);
+        }
+        //リストから削除
+        packetManager.packets.RemoveRange(index,2);
+
+        
     }
 
     public List<AttackObject> Uncompress(List<CompressObject> compressed)
     {
         var result = new List<AttackObject>();
+        packetManager.AllReset();
+        int count=0;
+
+        
         foreach (var compObj in compressed)
         {
             foreach (var elem in compObj.ElementZipped)
             {
+                //ここでリストを更新してるっぽい
                 result.Add(new AttackObject { Type = compObj.Type, Zipped = elem });
+                count++;
+                //高さをゴリ押しで調整
+                Vector3 newPos = new Vector3(-1.47935629f, -4.91727686f+(count*0.8f), -0.02f);
+                packetManager.MargeSpown((int)compObj.Type, (int)elem, newPos);
+
             }
         }
         return result;

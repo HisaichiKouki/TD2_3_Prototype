@@ -10,11 +10,13 @@ public class PacketManager : MonoBehaviour
     [SerializeField] AttackObjectHandler attackObjectHandler;
     [SerializeField] PacketScript[] packetPrefab;
 
-    [SerializeField] List<PacketScript> packets;
+    public List<PacketScript> packets;
 
     [SerializeField] bool isRandom;
     [SerializeField] List<int> packetTypes;
     [SerializeField] bool isMarge;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,7 @@ public class PacketManager : MonoBehaviour
         else
         {
             StartCoroutine(Spawn());
-            
+
         }
 
     }
@@ -42,6 +44,23 @@ public class PacketManager : MonoBehaviour
         //Instantiate(packetPrefab[index], this.transform);
         packets.Add(Instantiate(packetPrefab[index], this.transform));
         attackObjectHandler.AddAttackObject(packets[packets.Count - 1]);
+
+
+    }
+    //圧縮後nullになった箇所に圧縮オブジェクトを追加する
+    public void PacketInstantiate(int type, int zipped, Vector3 pos)
+    {
+        for (int i = 0; i < packets.Count; i++)
+        {
+            if (packets[i] == null)
+            {
+
+                packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
+            }
+        }
+        //Instantiate(packetPrefab[index], this.transform);
+
+        //attackObjectHandler.AddAttackObject(packets[packets.Count - 1]);
 
 
     }
@@ -74,18 +93,37 @@ public class PacketManager : MonoBehaviour
             {
                 //長押しで攻撃する時は先にリストから消す
                 attackObjectHandler.DestroyIndex(i);
-
-                //StartCoroutine(Marge(i));
-                isMarge=attackObjectHandler.ReturnAttackObject(i);
-
                 Destroy(packets[i].gameObject);
                 packets.RemoveAt(i);
+
+                //StartCoroutine(Marge(i));
+                isMarge = attackObjectHandler.ReturnAttackObject(i);
+
+
+
             }
 
         }
     }
     private IEnumerator Marge(int index)
     {
-        while(attackObjectHandler.ReturnAttackObject(index)) { yield return new WaitForSecondsRealtime(0.5f); }
+        while (attackObjectHandler.ReturnAttackObject(index)) { yield return new WaitForSecondsRealtime(0.5f); }
+    }
+
+    //リストのリセット
+   public void AllReset()
+    {
+        for (int i = 0; i < packets.Count; i++)
+        {
+            if (packets[i]!=null) Destroy(packets[i].gameObject);
+            
+        }
+        packets.Clear();
+    }
+
+    //マージ後に新しく生成する
+    public void MargeSpown(int type, int zipped, Vector3 pos)
+    {
+        packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
     }
 }
