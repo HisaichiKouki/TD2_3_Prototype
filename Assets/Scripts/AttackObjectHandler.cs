@@ -233,11 +233,16 @@ public class AttackObjectHandler : MonoBehaviour
         }
     }
 
+    //リストにパケットを追加する
     public void AddAttackObject(uint type,uint zipped)
     {
         attackObjects.Add(new AttackObject {Type = type, Zipped = zipped});
     }
-
+    public void AddAttackObject(PacketScript packet)
+    {
+        attackObjects.Add(new AttackObject { Type = packet.GetTypes(), Zipped = packet.GetZipped() });
+    }
+    //チャージが溜まったら攻撃開始
     public bool ReturnAttackObject(int index)
     {
         return ZipAttackObject(ref attackObjects, index);
