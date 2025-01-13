@@ -1216,6 +1216,8 @@ MonoBehaviour:
   - {fileID: -7114034884143433079, guid: 902dbc7634eed9b4a945d755405e9921, type: 3}
   - {fileID: -7114034884143433079, guid: 32a4d1047b7ba834ea1c3c41c8ba559e, type: 3}
   packets: []
+  isRandom: 0
+  packetTypes: 0000000001000000020000000000000001000000
 --- !u!1 &1545992040
 GameObject:
   m_ObjectHideFlags: 0

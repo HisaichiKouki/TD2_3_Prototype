@@ -10,11 +10,22 @@ public class PacketManager : MonoBehaviour
     [SerializeField] PacketScript[] packetPrefab;
 
     [SerializeField] List<PacketScript> packets;
+
+    [SerializeField] bool isRandom;
+    [SerializeField] List<int> packetTypes;
     // Start is called before the first frame update
     void Start()
     {
-        
-        StartCoroutine(Spawn());
+        if (isRandom)
+        {
+            StartCoroutine(SpawnRandom());
+        }
+        else
+        {
+            StartCoroutine(Spawn());
+            
+        }
+
     }
 
     // Update is called once per frame
@@ -32,7 +43,7 @@ public class PacketManager : MonoBehaviour
 
 
     }
-    private IEnumerator Spawn()
+    private IEnumerator SpawnRandom()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -40,7 +51,17 @@ public class PacketManager : MonoBehaviour
             PacketSpawn(Random.Range(0, packetPrefab.Length - 1));
 
         }
-        
+
+    }
+    private IEnumerator Spawn()
+    {
+        for (int i = 0; i < packetTypes.Count; i++)
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+            PacketSpawn(packetTypes[i]);
+
+        }
+
     }
 
     void PacketAttack()
@@ -53,7 +74,7 @@ public class PacketManager : MonoBehaviour
                 attackObjectHandler.DestroyIndex(i);
                 attackObjectHandler.ReturnAttackObject(i);
 
-               
+
                 Destroy(packets[i].gameObject);
                 packets.RemoveAt(i);
             }

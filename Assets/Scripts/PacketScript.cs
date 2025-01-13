@@ -63,7 +63,7 @@ public class PacketScript : MonoBehaviour
         {
             touch = true;
 
-            spriteRenderer.color = new UnityEngine.Color(initColor.r + 0.2f, initColor.r + 0.2f, initColor.b + 0.2f);
+            spriteRenderer.color = new UnityEngine.Color(initColor.r + 0.2f, initColor.g + 0.2f, initColor.b + 0.2f);
         }
     }
 
