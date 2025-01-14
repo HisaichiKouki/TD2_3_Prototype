@@ -50,9 +50,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHitPoint: 100
   curHitPoint: 0
-  healTime: 2
+  healTime: 1.8
   healCoolTime: 2
-  healPower: 40
+  healPower: 25
   animator: {fileID: 8970990375786098166}
   hitPointGauge: {fileID: 7815005347957796493}
 --- !u!61 &3507960505369925076

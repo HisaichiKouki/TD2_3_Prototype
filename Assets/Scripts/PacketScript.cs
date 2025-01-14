@@ -34,6 +34,8 @@ public class PacketScript : MonoBehaviour
     }
 
     public float GetGaugeRatio() { return gaugeRatio; }
+
+    PlayerScript playerScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +48,7 @@ public class PacketScript : MonoBehaviour
         powerText.SetText((int)zipped);
         gaugeObj = transform.GetChild(0).gameObject;
         gaugeObj.transform.localScale = new Vector3(0, 1, 1);
-
+        playerScript=FindAnyObjectByType<PlayerScript>();
 
     }
 
@@ -67,7 +69,7 @@ public class PacketScript : MonoBehaviour
         if (packetManager.GetIsMarge()) { return; }//マージが残ってる時
         if (Input.GetMouseButton(0))
         {
-            curChargeTime += Time.deltaTime;
+            curChargeTime += Time.deltaTime* playerScript.GetPower();
         }
     }
 
