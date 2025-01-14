@@ -52,24 +52,8 @@ public class PacketManager : MonoBehaviour
 
 
     }
-    //圧縮後nullになった箇所に圧縮オブジェクトを追加する
-    //public void PacketInstantiate(int type, uint zipped, Vector3 pos)
-    //{
-    //    for (int i = 0; i < packets.Count; i++)
-    //    {
-    //        if (packets[i] == null)
-    //        {
-
-    //            packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
-    //            packets[packets.Count - 1].SetZipped(zipped);
-    //        }
-    //    }
-    //    //Instantiate(packetPrefab[index], this.transform);
-
-    //    //attackObjectHandler.AddAttackObject(packets[packets.Count - 1]);
-
-
-    //}
+   
+    //初期生成用
     private IEnumerator SpawnRandom()
     {
         for (int i = 0; i < 3; i++)
@@ -90,6 +74,8 @@ public class PacketManager : MonoBehaviour
         }
 
     }
+
+    //マージの処理
     private IEnumerator Marging()
     {
         while (isMarge)
@@ -100,6 +86,7 @@ public class PacketManager : MonoBehaviour
         }
     }
 
+    //
     void PacketAttack()
     {
         for (int i = 0; i < packets.Count; i++)
@@ -130,10 +117,7 @@ public class PacketManager : MonoBehaviour
         }
         StartCoroutine(Marging());
     }
-    //private IEnumerator Marge(int index)
-    //{
-    //    while (attackObjectHandler.ReturnAttackObject(index)) { yield return new WaitForSecondsRealtime(0.5f); }
-    //}
+    
 
     //リストのリセット
     public void AllReset()
