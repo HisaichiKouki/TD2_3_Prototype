@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
     bool[] isDead=new bool[3];
     [SerializeField] TargetScript targetObj;
     [SerializeField] AttackEffect attackEffectPrefab;
+    [SerializeField] AttackEffect attackEffectPrefabBig;
     // Start is called before the first frame update
     void Start()
     {
@@ -100,6 +101,11 @@ public class EnemyManager : MonoBehaviour
     public void Effect(Vector2 initPos)
     {
         AttackEffect effect = Instantiate(attackEffectPrefab, initPos,Quaternion.identity);
+        effect.SetPosition(initPos, enemys[target].transform.position);
+    }
+    public void EffectBig(Vector2 initPos)
+    {
+        AttackEffect effect = Instantiate(attackEffectPrefabBig, initPos, Quaternion.identity);
         effect.SetPosition(initPos, enemys[target].transform.position);
     }
 }

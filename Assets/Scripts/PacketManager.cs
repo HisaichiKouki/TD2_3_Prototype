@@ -35,7 +35,7 @@ public class PacketManager : MonoBehaviour
             StartCoroutine(Spawn());
 
         }
-        
+
     }
 
     // Update is called once per frame
@@ -108,8 +108,18 @@ public class PacketManager : MonoBehaviour
             if (packets[i].GetGaugeRatio() >= 1.0f)
             {
                 //’·‰Ÿ‚µ‚ÅUŒ‚‚·‚é‚Íæ‚ÉƒŠƒXƒg‚©‚çÁ‚·
-                enemyManager.Attack((int)((packets[i].GetZipped() + 1) * (packets[i].GetZipped() + 1) * damageRatio));
-                enemyManager.Effect(packets[i].transform.position);
+                int damage = (int)((packets[i].GetZipped() + 1) * (packets[i].GetZipped() + 1) * damageRatio);
+                enemyManager.Attack(damage);
+
+                if (damage < 20)
+                {
+                    enemyManager.Effect(packets[i].transform.position);
+                }
+                else
+                {
+                    enemyManager.EffectBig(packets[i].transform.position);
+
+                }
 
                 attackObjectHandler.DestroyIndex(i);
                 Destroy(packets[i].gameObject);
