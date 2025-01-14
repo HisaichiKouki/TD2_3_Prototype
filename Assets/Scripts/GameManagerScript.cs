@@ -24,12 +24,13 @@ public class GameManagerScript : MonoBehaviour
 
     float cooltime;
     bool startFunc;
+    //float gametotalTime;
     // Start is called before the first frame update
     void Start()
     {
         packetManager = FindAnyObjectByType<PacketManager>();
         enemyManager = FindAnyObjectByType<EnemyManager>();
-
+        gameTime = 0;
 
     }
 
@@ -37,7 +38,7 @@ public class GameManagerScript : MonoBehaviour
     void Update()
     {
         StartSpawn();
-        gameTime = Time.time;
+        gameTime += Time.deltaTime;
 
         if (enemyManager.GetGameClear())
         {
@@ -77,7 +78,8 @@ public class GameManagerScript : MonoBehaviour
             curCoolTime = totalCooltime - enemyManager.GetIsEnergyEnemy();
             //curCoolTime = Mathf.Clamp(curCoolTime, 1.5f - (gameTime / 120), 6);
             curCoolTime = totalCooltime + enemyManager.GetIsEnergyEnemy();
-            curCoolTime -= Time.time / 90;
+            curCoolTime -= gameTime / 60;
+            curCoolTime = Mathf.Clamp(curCoolTime, 0.4f, 6);
             packetManager.EnemyPacket();
             yield return new WaitForSeconds(curCoolTime);
         }
