@@ -9,10 +9,12 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] EnemyScript[] enemys;
 
     int target;
-    bool[] isDead=new bool[3];
+    bool[] isDead = new bool[3];
     [SerializeField] TargetScript targetObj;
     [SerializeField] AttackEffect attackEffectPrefab;
     [SerializeField] AttackEffect attackEffectPrefabBig;
+
+    bool gameClear;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         Target();
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
             IsTarget();
         }
@@ -37,8 +39,9 @@ public class EnemyManager : MonoBehaviour
         {
             if (enemys[i].GetIsHealing())
             {
-                count+=1;
-            }else if (enemys[i].GetIsEnergy())
+                count += 1;
+            }
+            else if (enemys[i].GetIsEnergy())
             {
                 count += 3;
             }
@@ -49,13 +52,17 @@ public class EnemyManager : MonoBehaviour
     public void Target()
     {
 
-        if (!isDead[0]&& isDead[1] && isDead[2]) { targetObj.gameObject.SetActive(false); }
+        if (!isDead[0] && isDead[1] && isDead[2])
+        {
+            targetObj.gameObject.SetActive(false);
+            gameClear = true;
+        }
 
         if (target == 0)
         {
             if (enemys[target].GetIsDead())
             {
-                target=1;
+                target = 1;
                 isDead[0] = true;
                 targetObj.SetTargetPos(enemys[target].transform.position);
             }
@@ -93,19 +100,24 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-   public void Attack(int damage)
+    public void Attack(int damage)
     {
         enemys[target].Damage(damage);
     }
 
     public void Effect(Vector2 initPos)
     {
-        AttackEffect effect = Instantiate(attackEffectPrefab, initPos,Quaternion.identity);
+        AttackEffect effect = Instantiate(attackEffectPrefab, initPos, Quaternion.identity);
         effect.SetPosition(initPos, enemys[target].transform.position);
     }
     public void EffectBig(Vector2 initPos)
     {
         AttackEffect effect = Instantiate(attackEffectPrefabBig, initPos, Quaternion.identity);
         effect.SetPosition(initPos, enemys[target].transform.position);
+    }
+
+    public bool GetGameClear()
+    {
+        return gameClear;
     }
 }

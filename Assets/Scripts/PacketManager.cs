@@ -153,4 +153,14 @@ public class PacketManager : MonoBehaviour
         packets.Add(Instantiate(packetPrefab[type], pos, Quaternion.identity, this.transform));
         packets[packets.Count - 1].SetZipped(zipped);
     }
+
+    public void EnemyPacket()
+    {
+        PacketSpawn(UnityEngine.Random.Range(0, packetPrefab.Length - 1));
+    }
+
+    public int GetPacketNum()
+    {
+        return packets.Count;
+    }
 }

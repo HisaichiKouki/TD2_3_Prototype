@@ -36,6 +36,8 @@ public class EnemyScript : MonoBehaviour
     {
         curHitPoint = maxHitPoint;
         curHealTime = 0;
+        isHealing = false;
+        isEnergy = true;
     }
 
     // Update is called once per frame
@@ -71,6 +73,9 @@ public class EnemyScript : MonoBehaviour
         {
             animator.SetBool("IsBreak", false);
             animator.SetBool("IsEnergy", true);
+            isHealing = false;
+            isEnergy = true;
+
             return;
         }
         if (curHealTime > 0)
@@ -86,10 +91,14 @@ public class EnemyScript : MonoBehaviour
             curHitPoint = Mathf.Clamp(curHitPoint, 0, maxHitPoint);
             isHealing = true;
             curHealCoolTime += Time.deltaTime;
+
+            //‰ñ•œ‚¨‚í‚è
             if (curHealCoolTime > healCoolTime)
             {
                 curHealTime= healCoolTime;
                 isHealing = false;
+                isEnergy = true;
+
                 animator.SetBool("IsBreak", false);
                 animator.SetBool("IsEnergy", true);
             }
