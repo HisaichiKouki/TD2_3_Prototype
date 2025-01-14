@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] GameObject hitPointGauge;
 
     bool touch;
-
+ 
     public bool GetIsHealing() { return isHealing; }
     public bool GetIsDead() { return isDead; }
     public bool GetIsEnergy() { return isEnergy; }
@@ -44,7 +44,7 @@ public class EnemyScript : MonoBehaviour
         Healing();
 
 
-        hitPointGauge.transform.localScale = new Vector3(curHitPoint/ maxHitPoint,1,1);
+        hitPointGauge.transform.localScale = new Vector3(Mathf.Clamp01(curHitPoint/ maxHitPoint),1,1);
     }
 
     public void Damage(float damage)
@@ -119,4 +119,6 @@ public class EnemyScript : MonoBehaviour
             touch = false;
         }
     }
+
+    
 }

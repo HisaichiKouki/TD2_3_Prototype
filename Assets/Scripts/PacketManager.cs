@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PacketManager : MonoBehaviour
 {
+    [SerializeField] float damageRatio;//ダメージ倍率
     [SerializeField] AttackObjectHandler attackObjectHandler;
     [SerializeField] PacketScript[] packetPrefab;
 
@@ -16,12 +17,15 @@ public class PacketManager : MonoBehaviour
     [SerializeField] List<int> packetTypes;
     [SerializeField] bool isMarge;
 
-    public bool GetIsMarge() { return isMarge; }    
+    EnemyManager enemyManager;
+
+    public bool GetIsMarge() { return isMarge; }
 
 
     // Start is called before the first frame update
     void Start()
     {
+        enemyManager = FindAnyObjectByType<EnemyManager>();
         if (isRandom)
         {
             StartCoroutine(SpawnRandom());
@@ -31,7 +35,7 @@ public class PacketManager : MonoBehaviour
             StartCoroutine(Spawn());
 
         }
-
+        
     }
 
     // Update is called once per frame
@@ -104,11 +108,14 @@ public class PacketManager : MonoBehaviour
             if (packets[i].GetGaugeRatio() >= 1.0f)
             {
                 //長押しで攻撃する時は先にリストから消す
+                enemyManager.Attack((int)((packets[i].GetZipped() + 1) * (packets[i].GetZipped() + 1) * damageRatio));
+                enemyManager.Effect(packets[i].transform.position);
+
                 attackObjectHandler.DestroyIndex(i);
                 Destroy(packets[i].gameObject);
                 packets.RemoveAt(i);
 
-               // StartCoroutine(Marge(i));
+                // StartCoroutine(Marge(i));
                 isMarge = attackObjectHandler.ReturnAttackObject(i);
             }
         }
@@ -120,12 +127,12 @@ public class PacketManager : MonoBehaviour
     //}
 
     //リストのリセット
-   public void AllReset()
+    public void AllReset()
     {
         for (int i = 0; i < packets.Count; i++)
         {
-            if (packets[i]!=null) Destroy(packets[i].gameObject);
-            
+            if (packets[i] != null) Destroy(packets[i].gameObject);
+
         }
         packets.Clear();
     }
