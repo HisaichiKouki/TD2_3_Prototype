@@ -10,7 +10,7 @@ public class GameManagerScript : MonoBehaviour
     EnemyManager enemyManager;
 
     [SerializeField] float totalCooltime;
-    float curCoolTime;
+    [SerializeField] float curCoolTime;
 
     [SerializeField] int deadLine;
     [SerializeField] GameObject GameOverObj;
@@ -77,6 +77,7 @@ public class GameManagerScript : MonoBehaviour
             curCoolTime = totalCooltime - enemyManager.GetIsEnergyEnemy();
             //curCoolTime = Mathf.Clamp(curCoolTime, 1.5f - (gameTime / 120), 6);
             curCoolTime = totalCooltime + enemyManager.GetIsEnergyEnemy();
+            curCoolTime -= Time.time / 60;
             packetManager.EnemyPacket();
             yield return new WaitForSeconds(curCoolTime);
         }
