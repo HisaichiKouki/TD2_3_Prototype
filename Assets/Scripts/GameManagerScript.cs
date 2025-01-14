@@ -75,7 +75,8 @@ public class GameManagerScript : MonoBehaviour
         while (!isGameOver && !isGameClear)
         {
             curCoolTime = totalCooltime - enemyManager.GetIsEnergyEnemy();
-            curCoolTime = Mathf.Clamp(curCoolTime, 1.5f - (gameTime / 120), 6);
+            //curCoolTime = Mathf.Clamp(curCoolTime, 1.5f - (gameTime / 120), 6);
+            curCoolTime = totalCooltime + enemyManager.GetIsEnergyEnemy();
             packetManager.EnemyPacket();
             yield return new WaitForSeconds(curCoolTime);
         }

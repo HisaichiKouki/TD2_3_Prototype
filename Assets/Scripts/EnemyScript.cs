@@ -52,7 +52,8 @@ public class EnemyScript : MonoBehaviour
     public void Damage(float damage)
     {
         curHitPoint -= damage;
-        curHealTime = healTime;
+
+        if(!isHealing) curHealTime = healTime;
         if (curHitPoint <= 0) 
         {
             isDead = true;

@@ -41,10 +41,10 @@ public class EnemyManager : MonoBehaviour
             {
                 count += 1;
             }
-            else if (enemys[i].GetIsEnergy())
-            {
-                count += 3;
-            }
+            //else if (enemys[i].GetIsEnergy())
+            //{
+            //    count += 3;
+            //}
         }
         return count;
     }
@@ -52,10 +52,11 @@ public class EnemyManager : MonoBehaviour
     public void Target()
     {
 
-        if (!isDead[0] && isDead[1] && isDead[2])
+        if (isDead[0] && isDead[1] && isDead[2])
         {
             targetObj.gameObject.SetActive(false);
             gameClear = true;
+            return;
         }
 
         if (target == 0)
