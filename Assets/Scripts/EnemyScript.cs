@@ -17,10 +17,19 @@ public class EnemyScript : MonoBehaviour
 
     bool isHealing;
     bool isDead;
+    bool isEnergy;
 
     [SerializeField] Animator animator;
 
     [SerializeField] GameObject hitPointGauge;
+
+    bool touch;
+
+    public bool GetIsHealing() { return isHealing; }
+    public bool GetIsDead() { return isDead; }
+    public bool GetIsEnergy() { return isEnergy; }
+    public bool GetTouch() { return touch; }
+
 
     // Start is called before the first frame update
     void Start()
@@ -75,11 +84,12 @@ public class EnemyScript : MonoBehaviour
             animator.SetBool("IsEnergy", false);
             curHitPoint += healPower * Time.deltaTime;
             curHitPoint = Mathf.Clamp(curHitPoint, 0, maxHitPoint);
-
+            isHealing = true;
             curHealCoolTime += Time.deltaTime;
             if (curHealCoolTime > healCoolTime)
             {
                 curHealTime= healCoolTime;
+                isHealing = false;
                 animator.SetBool("IsBreak", false);
                 animator.SetBool("IsEnergy", true);
             }
@@ -91,5 +101,22 @@ public class EnemyScript : MonoBehaviour
     public void Attack2Damage()
     {
         Damage(10);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "MousePointer")
+        {
+            touch = true;
+
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "MousePointer")
+        {
+            touch = false;
+        }
     }
 }
