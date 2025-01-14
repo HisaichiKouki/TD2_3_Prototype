@@ -1356,7 +1356,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5609355f4be6389479b82c43f8676b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackObjects: []
+  attackObjects:
+  - Type: 0
+    Zipped: 0
+  - Type: 0
+    Zipped: 0
+  - Type: 0
+    Zipped: 0
+  - Type: 1
+    Zipped: 0
   testIndex: 0
 --- !u!1 &1565564816
 GameObject:
