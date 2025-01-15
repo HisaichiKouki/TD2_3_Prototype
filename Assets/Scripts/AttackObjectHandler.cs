@@ -111,14 +111,14 @@ public class AttackObjectHandler : MonoBehaviour
         compressed.RemoveRange(index,2);
         margeIndex = index;
 
-        //ゲームオブジェクトをDestroy
-        for (int i = 0; i < index + 2; i++)
-        {
-            destroyPos= packetManager.packets[i].gameObject.transform.position;
-            Destroy(packetManager.packets[i].gameObject);
-        }
-        //リストから削除
-        packetManager.packets.RemoveRange(index,2);
+        ////ゲームオブジェクトをDestroy
+        //for (int i = 0; i < index + 2; i++)
+        //{
+        //    destroyPos= packetManager.packets[i].gameObject.transform.position;
+        //    Destroy(packetManager.packets[i].gameObject);
+        //}
+        ////リストから削除
+        //packetManager.packets.RemoveRange(index,2);
 
         
     }
@@ -177,9 +177,34 @@ public class AttackObjectHandler : MonoBehaviour
         vec = Uncompress(compressed);
         return result;
     }
+   
+    //リストにパケットを追加する
+    public void AddAttackObject(uint type,uint zipped)
+    {
+        attackObjects.Add(new AttackObject {Type = type, Zipped = zipped});
+    }
+    //packetScritptから直接代入出来るパターン
+    public void AddAttackObject(PacketScript packet)
+    {
+        attackObjects.Add(new AttackObject { Type = packet.GetTypes(), Zipped = packet.GetZipped() });
+    }
 
-    // Unity Editorでのデバッグ実行用
-    // Unity Editorでのデバッグ実行用
+    //チャージが溜まったら攻撃開始
+    public bool ReturnAttackObject(int index)
+    {
+        return ZipAttackObject(ref attackObjects, index);
+        
+    }
+
+    //攻撃時にチャージしたパケットを消す用
+    public void DestroyIndex(int index)
+    {
+        attackObjects.RemoveAt(index);
+    }
+
+    /// ------------------------------------------------------------------------------------------------------------------------///
+    /// Unity Editorでのデバッグ実行用ここから
+    /// ------------------------------------------------------------------------------------------------------------------------///
     [ContextMenu("SetType")]
     public void TestSetType()
     {
@@ -225,7 +250,7 @@ public class AttackObjectHandler : MonoBehaviour
     public void TestCompression()
     {
         int index = testIndex; // サンプル
-        
+
 
         Debug.Log("Before Compression:");
         foreach (var obj in attackObjects)
@@ -263,25 +288,8 @@ public class AttackObjectHandler : MonoBehaviour
             Debug.Log($"Type: {obj.Type}, Zipped: {obj.Zipped}");
         }
     }
+    /// ------------------------------------------------------------------------------------------------------------------------///
+    /// Unity Editorでのデバッグ実行用ここまで
+    /// ------------------------------------------------------------------------------------------------------------------------///
 
-    //リストにパケットを追加する
-    public void AddAttackObject(uint type,uint zipped)
-    {
-        attackObjects.Add(new AttackObject {Type = type, Zipped = zipped});
-    }
-    public void AddAttackObject(PacketScript packet)
-    {
-        attackObjects.Add(new AttackObject { Type = packet.GetTypes(), Zipped = packet.GetZipped() });
-    }
-    //チャージが溜まったら攻撃開始
-    public bool ReturnAttackObject(int index)
-    {
-        return ZipAttackObject(ref attackObjects, index);
-        
-    }
-
-    public void DestroyIndex(int index)
-    {
-        attackObjects.RemoveAt(index);
-    }
 }

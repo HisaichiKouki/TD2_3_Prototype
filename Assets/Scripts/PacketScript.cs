@@ -20,7 +20,7 @@ public class PacketScript : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     GameObject gaugeObj;
-    public float gaugeRatio;
+    float gaugeRatio;
     float totalTime;
 
     PacketManager packetManager;
@@ -47,6 +47,7 @@ public class PacketScript : MonoBehaviour
         
         powerText.SetText((int)zipped);
         gaugeObj = transform.GetChild(0).gameObject;
+
         gaugeObj.transform.localScale = new Vector3(0, 1, 1);
         playerScript=FindAnyObjectByType<PlayerScript>();
 

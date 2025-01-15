@@ -16,6 +16,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] GameObject GameOverObj;
     [SerializeField] GameObject GameClearObj;
 
+    
 
     float gameTime;
 
